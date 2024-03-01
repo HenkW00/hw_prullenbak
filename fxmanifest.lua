@@ -2,7 +2,7 @@ fx_version 'bodacious'
 games {'gta5'}
 
 lua54 'yes'
-version '1.2.0'
+version '1.2.3'
 
 description 'Prullenbak script voor AMRP'
 author 'Henk W'
