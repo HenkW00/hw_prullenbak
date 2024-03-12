@@ -74,17 +74,40 @@ end
 Search = function(entity)
     searching = true
     cachedDumpsters[entity] = true
-    TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_BUM_BIN", 0, true)
+    local playerPed = PlayerPedId()
+
+    TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_BUM_BIN", 0, true)
+
+    Citizen.CreateThread(function()
+        Citizen.Wait(1000)
+
+        if not IsPedUsingScenario(playerPed, "PROP_HUMAN_BUM_BIN") then
+            searching = false
+            ClearPedTasks(playerPed)
+            ESX.ShowNotification("Stop abusing!")
+            ESX.ShowNotification("~y~You canceled the search...")
+            return
+        end
+    end)
+
     exports["t0sic_loadingbar"]:StartDelayedFunction(Strings["Searching"], Config["SearchTime"], function()
-        ESX["TriggerServerCallback"](GetCurrentResourceName(), function(found, object, quantity)
+        if not IsPedUsingScenario(playerPed, "PROP_HUMAN_BUM_BIN") then
+            searching = false
+            ClearPedTasks(playerPed)
+            ESX.ShowNotification("~r~Stop abusing!")
+            ESX.ShowNotification("~y~You canceled the search...")
+            return
+        end
+
+        ESX.TriggerServerCallback(GetCurrentResourceName(), function(found, object, quantity)
             if found then
-                ESX["ShowNotification"](Strings["Found"] .. quantity .. "x " .. object)
+                ESX.ShowNotification(Strings["Found"] .. quantity .. "x " .. object)
             else
-                ESX["ShowNotification"](Strings["Nothing"])
+                ESX.ShowNotification(Strings["Nothing"])
             end
         end)
         searching = false
-        ClearPedTasks(PlayerPedId())
+        ClearPedTasks(playerPed)
     end)
 end
 
