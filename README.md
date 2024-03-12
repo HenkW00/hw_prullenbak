@@ -47,9 +47,9 @@ Features:
 
 ## Latest update about this script
 
-- Added dumpster diving functionality
-- Improved random item and weapon generation
-- Bug fixes and performance improvements
+- Added abuse check on search
+- Rewrote client>main.lua
+- Rewrote config.lua
 
 
 
