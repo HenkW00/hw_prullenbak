@@ -1,5 +1,0 @@
-Update 1.2.4
-
-- Added abuse check on search
-- Rewrote client>main.lua
-- Rewrote config.lua

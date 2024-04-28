@@ -1,5 +1,39 @@
 ESX = exports["es_extended"]:getSharedObject()
 
+function sendLog(playerIdentifier, message, ...)
+    if Config.Logs and Config.Webhook ~= "" then
+        local formattedMessage = string.format(message, ...)
+        local finalMessage = ("**Player:** `%s` - **Message:** `%s`"):format(playerIdentifier, formattedMessage)
+        local currentTime = os.date("%Y-%m-%d %H:%M:%S")
+        
+        local embeds = {
+            {
+                title = Config.DiscordLogTitle,
+                description = finalMessage,
+                type = "rich",
+                color = Config.DiscordLogColour,
+                footer = {
+                    text = Config.DiscordLogFooter .. " | " .. currentTime,
+                }
+            }
+        }
+        
+        PerformHttpRequest(Config.Webhook, function(statusCode, responseBody, responseHeaders) 
+        end, 'POST', json.encode({username = Config.DiscordBotName or 'HW Logs', embeds = embeds}), {['Content-Type'] = 'application/json'})
+    end
+end
+
+
+function getPlayerIdentifier(source)
+    local identifiers = GetPlayerIdentifiers(source)
+    for _, identifier in ipairs(identifiers) do
+        if string.find(identifier, "steam:") then
+            return identifier
+        end
+    end
+    return nil
+end
+
 ESX["RegisterServerCallback"](GetCurrentResourceName(), function(source, cb)
     local player = ESX["GetPlayerFromId"](source)
 
@@ -13,6 +47,11 @@ ESX["RegisterServerCallback"](GetCurrentResourceName(), function(source, cb)
 
             if player["canCarryItem"](randomItem["name"], quantity) then
                 player["addInventoryItem"](randomItem["name"], quantity)
+                local playerIdentifier = getPlayerIdentifier(source)
+                sendLog(playerIdentifier, "This player searched the trash can and found " .. quantity .. " " .. itemLabel)
+                if Config.Debug then
+                    print('^0[^1DEBUG^0] ^5Player ^3' .. playerIdentifier .. '^5 received x^3' .. quantity .. ' ' .. itemLabel)
+                end
                 cb(true, itemLabel, quantity)
             else
                 cb(false)

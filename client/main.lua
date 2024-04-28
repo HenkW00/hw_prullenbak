@@ -3,34 +3,15 @@ ESX = exports["es_extended"]:getSharedObject()
 searching = false
 cachedDumpsters = {}
 
--- Citizen["CreateThread"](function()
---     while ESX == nil do
---         Citizen["Wait"](5)
-
--- 		TriggerEvent("esx:getSharedObject", function(library)
--- 			ESX = library
--- 		end)
---     end
-
---     if ESX["IsPlayerLoaded"]() then
--- 		ESX["PlayerData"] = ESX["GetPlayerData"]()
---     end
--- end)
-
--- RegisterNetEvent("esx:playerLoaded")
--- AddEventHandler("esx:playerLoaded", function(response)
--- 	ESX["PlayerData"] = response
--- end)
-
-Citizen["CreateThread"](function()
+Citizen.CreateThread(function()
     while true do
         local sleepThread = 750
         local playerPed = PlayerPedId()
         local playerCoords = GetEntityCoords(playerPed)
-        local isInVehicle = IsPedInAnyVehicle(playerPed, false) -- Check if the player is in a vehicle
+        local isInVehicle = IsPedInAnyVehicle(playerPed, false)
 
         if searching then DisableControls() end 
-        if not isInVehicle then -- Only proceed if the player is not in a vehicle
+        if not isInVehicle then
             for i = 1, #Config["Dumpsters"] do
                 local entity = GetClosestObjectOfType(playerCoords, 1.0, GetHashKey(Config["Dumpsters"][i]), false, false, false)
                 local entityCoords = GetEntityCoords(entity)
@@ -42,7 +23,7 @@ Citizen["CreateThread"](function()
                         if not cachedDumpsters[entity] then
                             Search(entity)
                         else
-                            ESX["ShowNotification"](Strings["Searched"])
+                            ESX.ShowNotification(Strings["Searched"])
                         end
                     end
 
@@ -51,25 +32,11 @@ Citizen["CreateThread"](function()
                 end
             end
         else
-            -- Optionally, display a notification that searching is not allowed while in a vehicle
-            -- ESX["ShowNotification"]("You cannot search while in a vehicle.")
+            ESX.ShowNotification(Strings["Vehicle"])
         end
-
-        Citizen["Wait"](sleepThread)
+        Citizen.Wait(sleepThread)
     end
 end)
-
-DrawText3D = function(coords, text)
-    SetDrawOrigin(coords)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextEntry("STRING")
-    SetTextCentre(1)
-    AddTextComponentString(text)
-    DrawText(0.0, 0.0)
-    DrawRect(0.0, 0.0125, 0.015 + text:gsub("~.-~", ""):len() / 370, 0.03, 45, 45, 45, 150)
-    ClearDrawOrigin()
-end
 
 Search = function(entity)
     searching = true
@@ -86,6 +53,9 @@ Search = function(entity)
             ClearPedTasks(playerPed)
             ESX.ShowNotification("Stop abusing!")
             ESX.ShowNotification("~y~You canceled the search...")
+            if Config.Debug then
+                print('^0[^1DEBUG^0] ^5Search canceled.')
+            end
             return
         end
     end)
@@ -96,19 +66,39 @@ Search = function(entity)
             ClearPedTasks(playerPed)
             ESX.ShowNotification("~r~Stop abusing!")
             ESX.ShowNotification("~y~You canceled the search...")
+            if Config.Debug then
+                print('^0[^1DEBUG^0] ^5Search canceled.')
+            end
             return
         end
 
         ESX.TriggerServerCallback(GetCurrentResourceName(), function(found, object, quantity)
             if found then
                 ESX.ShowNotification(Strings["Found"] .. quantity .. "x " .. object)
+                if Config.Debug then
+                    print('^0[^1DEBUG^0] ^5Found ^3' .. quantity .. 'x ' .. object)
+                end
             else
-                ESX.ShowNotification(Strings["Nothing"])
+                if Config.Debug then
+                    print('^0[^1DEBUG^0] ^5Nothing found.')
+                end
             end
         end)
         searching = false
         ClearPedTasks(playerPed)
     end)
+end
+
+DrawText3D = function(coords, text)
+    SetDrawOrigin(coords)
+    SetTextScale(0.35, 0.35)
+    SetTextFont(4)
+    SetTextEntry("STRING")
+    SetTextCentre(1)
+    AddTextComponentString(text)
+    DrawText(0.0, 0.0)
+    DrawRect(0.0, 0.0125, 0.015 + text:gsub("~.-~", ""):len() / 370, 0.03, 45, 45, 45, 150)
+    ClearDrawOrigin()
 end
 
 DisableControls = function()

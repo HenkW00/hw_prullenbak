@@ -1,4 +1,17 @@
 Config = {
+-- Util Settings
+    Debug = true,
+    Logs = true,
+    Webhook = "https://discord.com/api/webhooks/1233946774826385408/oScL4H5FGLr2lGH-_H4DvKOkZIvqsFmsJML-ACBEdYFg8tdP_MzdProkHohsdFBFFxOC",
+    
+-- Discord Logs
+    DiscordBotName = "HW Development",
+    DiscordLogTitle = "__🗑️Trash Search🗑️__",
+    DiscordEmbedStyle = "rich",
+    DiscordLogColour = 0xFfff33,
+    DiscordLogFooter = "HW Logs",
+
+-- Script Settings
     EnableWeapons = false,
     SearchTime = 5000, 
 
@@ -19,7 +32,6 @@ Config = {
         { name = "plastic", minQuantity = 1, maxQuantity = 2 },
         { name = "iron", minQuantity = 1, maxQuantity = 1 },
         { name = "sandwich", minQuantity = 1, maxQuantity = 2 },
-
     },
 
     Weapons = { 
@@ -27,10 +39,12 @@ Config = {
     }
 }
 
+-- Locale strings
 Strings = { 
     ["Search"] = "Druk [~g~E~s~] om te zoeken",
     ["Searched"] = "Je hebt deze prullenbak al doorzocht!",
     ["Found"] = "Je vond ",
     ["Searching"] = "Zoeken...",
-    ["Nothing"] = "Je hebt niks gevonden..."
+    ["Nothing"] = "Je hebt niks gevonden...",
+    ["Vehicle"] = "You are not allowed to search while in a vehicle!"
 }

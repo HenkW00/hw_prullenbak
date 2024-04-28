@@ -1,62 +1,37 @@
+# HW Scripts - Trashbin Searching
 
-# HW Development - Trashbin Searching
-
+## Description
 The HW Prullenbak Script adds a dumpster diving feature to your FiveM server. Players can interact with designated trash bins to randomly obtain items or weapons. This script also includes configuration options for customizing the items and weapons available for dumpster diving.
 
 ## Author
+- HW Development | HenkW
 
-- [@HenkW00](https://www.github.com/HenkW00)
+## 🛠 Requirements
+- ESX Server
 
+## 🌐 Requirements Download links
+- es_extended: [https://github.com/esx-framework/esx_core]
 
-## Installation
+## ✅ Features
+- Players can interact with designated trash bins to randomly obtain items or weapons.
+- Dumpster diving results are influenced by luck factors and configurable item/weapon settings.
+- Discord integration allows logging of dumpster diving activities for server administration.
+- Easy to configure this script.
 
-This script is only available through tebex
+## 🔧 Download & Installation
+Follow these steps to set up the black market script on your ESX server:
 
+1. **Download the Files**: Download the script files from the provided source.
+2. **Copy to Server Resource Directory**: Place the `hw_mechanicjob` folder in the server resource directory.
+3. **Update `server.cfg`**: Add the following line to your `server.cfg` file:
+```cfg
+start hw_mechanicjob
 ```
-After purchase follow these steps.
-
-Usage:
-> Players can interact with designated trash bins to randomly obtain items or weapons.
-> Dumpster diving results are influenced by luck factors and configurable item/weapon settings.
-> Discord integration allows logging of dumpster diving activities for server administration.
-
-Installation:
-> Clone or download the script files.
-> Place the hw_prullenbak folder in your FiveM server's resources directory.
-> Ensure you have the ESX framework properly installed and configured in your server.
-> Add start hw_prullenbak to your server.cfg file.
-
-Config:
-> Adjust the items and weapons available for dumpster diving in the config.lua file.
-> Customize the luck factor and quantity ranges for items and weapons.
-> Modify Discord webhook URLs, webhook names, and logos for logging dumpster diving activities.
-
-```
-    
-Features:
-
-- Dumpster diving functionality
-- Random item and weapon generation
-- Customizable items and weapons
-- Integration with the ESX framework
-- Discord logging for dumpster diving activities
-
-## Dependecies
-
-- ESX Framework
-
-## Latest update about this script
-
-- Added abuse check on search
-- Rewrote client>main.lua
-- Rewrote config.lua
+4. **Start Your Server**: Restart or start your ESX server to load the `hw_mechanicjob` resource.
 
 
+If help is needed, you can contact me via discord.
 
-## Related
+Link for that you can find in console upon restarting the script, otherwise just search for HenkW00 on google/github/CFX
 
-Here are some other scripts
-
-- [hw_witwas](https://hw-scripts-store.tebex.io/package/6047798)
-- [hw_noodknop](https://hw-scripts-store.tebex.io/package/6045776)
-- [hw_prullenbak](https://hw-scripts-store.tebex.io/package/6045771)
+Enjoy the script, i hope you like it! <3
