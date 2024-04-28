@@ -32,7 +32,7 @@ Citizen.CreateThread(function()
                 end
             end
         else
-            ESX.ShowNotification(Strings["Vehicle"])
+           -- ESX.ShowNotification(Strings["Vehicle"])
         end
         Citizen.Wait(sleepThread)
     end

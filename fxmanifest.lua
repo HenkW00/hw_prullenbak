@@ -1,21 +1,21 @@
 fx_version 'bodacious'
 games {'gta5'}
-
 lua54 'yes'
-version '1.2.6'
 
-description 'Prullenbak script voor AMRP'
+description 'Trash searching script'
 author 'Henk W'
+version '1.2.7'
 
-shared_script 'config.lua'
-client_script 'client/main.lua'
-server_script 'server/main.lua'
-
-escrow_ignore {
-    'config.lua', 
-    'fxmanifest.lua', 
+shared_scripts {
+    'config.lua',
+    '@es_extended/imports.lua'
 }
 
-server_scripts { '@mysql-async/lib/MySQL.lua' }
+client_scripts {
+    'client/main.lua'
+}
 
-shared_script '@es_extended/imports.lua'
+server_scripts {
+    'server/main.lua',
+    '@mysql-async/lib/MySQL.lua'
+}
